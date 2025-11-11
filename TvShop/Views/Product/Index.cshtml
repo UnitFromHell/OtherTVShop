@@ -1,0 +1,259 @@
+@model IEnumerable<TvShop.Models.Product>
+@{
+    ViewData["Title"] = "Каталог телевизоров";
+}
+
+<section class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 text-white py-20">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 text-6xl">📺</div>
+        <div class="absolute top-20 right-20 text-8xl">🛒</div>
+        <div class="absolute bottom-20 left-20 text-7xl">⭐</div>
+    </div>
+    
+    <div class="relative container mx-auto px-4 text-center z-10">
+        <h1 class="text-5xl md:text-6xl font-black mb-6">
+            Наш 
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+                каталог
+            </span>
+        </h1>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+            Откройте для себя лучшие телевизоры 2025 года. Технологии будущего уже здесь.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-8 mt-12">
+            <div class="text-center">
+                <div class="text-3xl font-bold text-cyan-400">@Model.Count()</div>
+                <div class="text-gray-400 text-sm">моделей в наличии</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-purple-400">4.9</div>
+                <div class="text-gray-400 text-sm">средний рейтинг</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-bold text-green-400">24/7</div>
+                <div class="text-gray-400 text-sm">поддержка</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-8 bg-white border-b border-gray-100 sticky top-0 z-40 backdrop-blur-sm bg-white/95">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
+            <div class="flex flex-wrap gap-3">
+                <button class="filter-btn active bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-xl font-semibold transition-all duration-300">
+                    Все товары
+                </button>
+                <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-2 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300">
+                    QLED
+                </button>
+                <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-2 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300">
+                    OLED
+                </button>
+                <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-2 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300">
+                    4K Ultra HD
+                </button>
+                <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-2 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300">
+                    55" и больше
+                </button>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="text-gray-600 font-medium">Сортировка:</span>
+                <select class="bg-white border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option>По популярности</option>
+                    <option>По цене (сначала дешевые)</option>
+                    <option>По цене (сначала дорогие)</option>
+                    <option>По новизне</option>
+                    <option>По рейтингу</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-20">
+                <div class="max-w-md mx-auto">
+                    <i class="fas fa-tv text-8xl text-gray-300 mb-6"></i>
+                    <h3 class="text-3xl font-bold text-gray-800 mb-4">Товары временно отсутствуют</h3>
+                    <p class="text-gray-600 mb-8 text-lg">Мы уже работаем над пополнением ассортимента</p>
+                    <a asp-controller="Home" asp-action="Index" 
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-home"></i>
+                        Вернуться на главную
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                @foreach (var product in Model)
+                {
+                    <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-blue-200 flex flex-col h-full transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden">
+                            <div class="absolute top-4 left-4 z-10 flex flex-col gap-2">
+                                @if (product.Price > 80000)
+                                {
+                                    <span class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                        PREMIUM
+                                    </span>
+                                }
+                                <span class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                    В НАЛИЧИИ
+                                </span>
+                            </div>
+
+                            <button class="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors duration-300 shadow-lg">
+                                <i class="far fa-heart"></i>
+                            </button>
+
+                            <div class="aspect-w-16 aspect-h-9 bg-gray-100">
+                                <img src="@product.ImgUrl" alt="@product.NameProduct" 
+                                     class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+
+                            <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                        </div>
+
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex-grow">
+                                <h3 class="text-xl font-bold text-gray-800 mb-3 leading-tight group-hover:text-blue-600 transition-colors duration-300">
+                                    @product.NameProduct
+                                </h3>
+                                <p class="text-gray-600 mb-4 line-clamp-2 leading-relaxed">
+                                    @product.DescriptionProduct
+                                </p>
+
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-50 text-blue-600 px-2 py-1 rounded-lg text-xs font-medium">
+                                        <i class="fas fa-expand-alt mr-1"></i>4K UHD
+                                    </span>
+                                    <span class="bg-purple-50 text-purple-600 px-2 py-1 rounded-lg text-xs font-medium">
+                                        <i class="fas fa-wifi mr-1"></i>Smart TV
+                                    </span>
+                                    <span class="bg-green-50 text-green-600 px-2 py-1 rounded-lg text-xs font-medium">
+                                        <i class="fas fa-volume-up mr-1"></i>Dolby Audio
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div>
+                                        <span class="text-2xl font-bold text-gray-800">@product.Price.ToString("N0") ₽</span>
+                                        @if (product.Price > 50000)
+                                        {
+                                            <div class="text-green-600 text-sm font-semibold flex items-center gap-1">
+                                                <i class="fas fa-bolt"></i>
+                                                <span>Выгодно</span>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="text-yellow-400 flex items-center gap-1">
+                                        <i class="fas fa-star"></i>
+                                        <span class="text-gray-600 font-semibold">4.8</span>
+                                    </div>
+                                </div>
+                                
+                              
+                                <div class="flex gap-3">
+                                    
+                                    <a asp-action="Details" asp-route-id="@product.ID" 
+                                       class="flex-1 group/details inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-4 py-3 rounded-xl font-semibold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-200/50">
+                                        <span>Подробнее</span>
+                                        <i class="fas fa-arrow-right group-hover/details:translate-x-1 transition-transform duration-300"></i>
+                                    </a>
+                                    
+                                  
+                                    <button onclick="addToCart(@product.ID)" 
+                                            class="flex-1 group/cart inline-flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                        <i class="fas fa-cart-plus group-hover/cart:scale-110 transition-transform"></i>
+                                        <span class="hidden sm:inline">В корзину</span>
+                                    </button>
+                                </div>
+                                
+                               
+                                <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
+                                    <button class="text-gray-400 hover:text-blue-600 transition-colors duration-300 flex items-center gap-2 text-sm">
+                                        <i class="far fa-chart-bar"></i>
+                                        <span>Сравнить</span>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-red-600 transition-colors duration-300 flex items-center gap-2 text-sm">
+                                        <i class="far fa-heart"></i>
+                                        <span>В избранное</span>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-green-600 transition-colors duration-300 flex items-center gap-2 text-sm">
+                                        <i class="fas fa-share-alt"></i>
+                                        <span>Поделиться</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="flex justify-center items-center gap-4 mt-16">
+                <button class="w-12 h-12 bg-white border border-gray-300 rounded-xl flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors duration-300">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                
+                <div class="flex gap-2">
+                    <button class="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold transition-all duration-300">
+                        1
+                    </button>
+                    <button class="w-12 h-12 bg-white border border-gray-300 rounded-xl text-gray-600 hover:bg-gray-50 transition-colors duration-300">
+                        2
+                    </button>
+                    <button class="w-12 h-12 bg-white border border-gray-300 rounded-xl text-gray-600 hover:bg-gray-50 transition-colors duration-300">
+                        3
+                    </button>
+                    <span class="w-12 h-12 flex items-center justify-center text-gray-400">
+                        ...
+                    </span>
+                </div>
+                
+                <button class="w-12 h-12 bg-white border border-gray-300 rounded-xl flex items-center justify-center text-gray-600 hover:bg-gray-50 transition-colors duration-300">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        }
+    </div>
+</section>
+
+<section class="py-16 bg-white border-t border-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-8 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border border-blue-100">
+                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shipping-fast text-2xl text-blue-600"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-800">Бесплатная доставка</h3>
+                <p class="text-gray-600">Привезем и установим ваш телевизор бесплатно</p>
+            </div>
+            
+            <div class="text-center p-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-100">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-2xl text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-800">Гарантия 2 года</h3>
+                <p class="text-gray-600">Официальная гарантия на все модели телевизоров</p>
+            </div>
+            
+            <div class="text-center p-8 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl border border-purple-100">
+                <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-headset text-2xl text-purple-600"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-800">Поддержка 24/7</h3>
+                <p class="text-gray-600">Всегда готовы помочь с выбором и настройкой</p>
+            </div>
+        </div>
+    </div>
+</section>
+

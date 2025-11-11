@@ -1,0 +1,7 @@
+.bg-gradient-to-br {
+    transition: all 0.3s ease;
+}
+
+.bg-gradient-to-br:hover {
+    transform: translateY(-5px);
+}

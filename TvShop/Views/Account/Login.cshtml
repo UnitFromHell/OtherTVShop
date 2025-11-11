@@ -1,0 +1,68 @@
+@model TvShop.Models.User
+@{
+    ViewData["Title"] = "Вход в систему";
+}
+
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md mx-auto">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 py-6 px-8">
+                <div class="flex items-center justify-center space-x-3">
+                    <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-lg">
+                        <span class="text-blue-600 font-bold text-xl">TV</span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-white">TVShop</h1>
+                </div>
+                <p class="text-blue-100 text-center mt-3 text-sm">Войдите в свой аккаунт</p>
+            </div>
+
+            <div class="py-8 px-8">
+                <form method="post" class="space-y-6">
+                    <div class="space-y-2">
+                        <label for="Email" class="block text-sm font-medium text-gray-700">
+                            <i class="fas fa-envelope mr-2 text-blue-500"></i>Email адрес
+                        </label>
+                        <input id="Email" name="email" type="email" required 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400"
+                               placeholder="your@email.com" />
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="Password" class="block text-sm font-medium text-gray-700">
+                            <i class="fas fa-lock mr-2 text-blue-500"></i>Пароль
+                        </label>
+                        <input id="Password" name="password" type="password" required 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400"
+                               placeholder="Введите пароль" />
+                    </div>
+
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Войти в систему
+                    </button>
+                </form>
+
+                <div class="relative my-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">Нет аккаунта?</span>
+                    </div>
+                </div>
+
+                <a asp-controller="Account" asp-action="Register" 
+                   class="block w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-6 rounded-xl font-semibold text-center hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200 shadow-md">
+                    <i class="fas fa-user-plus mr-2"></i>Создать новый аккаунт
+                </a>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <p class="text-gray-600 text-sm">
+                <i class="fas fa-shield-alt mr-2 text-green-500"></i>
+                Ваши данные защищены
+            </p>
+        </div>
+    </div>
+</div>

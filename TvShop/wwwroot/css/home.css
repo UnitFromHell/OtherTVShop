@@ -1,0 +1,17 @@
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(var(--tw-rotate)); }
+    50% { transform: translateY(-20px) rotate(var(--tw-rotate)); }
+}
+
+.hover\:shadow-3xl:hover {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.backdrop-blur-sm {
+    backdrop-filter: blur(8px);
+}

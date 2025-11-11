@@ -1,0 +1,98 @@
+@model List<TvShop.Models.CartItem>
+@{
+    ViewData["Title"] = "Корзина";
+}
+
+<section class="py-16 bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">🛒 Ваша корзина</h1>
+
+        @if (!Model.Any())
+        {
+            <div class="text-center py-20 bg-white rounded-2xl shadow-lg">
+                <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shopping-cart text-4xl text-gray-400"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-700 mb-4">Корзина пуста</h2>
+                <p class="text-gray-500 mb-8">Добавьте товары из каталога, чтобы сделать заказ</p>
+                <a asp-controller="Product" asp-action="Index" 
+                   class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                    Перейти к покупкам
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    @foreach (var item in Model)
+                    {
+                        <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center space-x-6 hover:shadow-xl transition-all duration-300">
+                            <img src="@item.ImageUrl" alt="@item.ProductName" 
+                                 class="w-24 h-24 object-cover rounded-xl shadow-md">
+                            
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">@item.ProductName</h3>
+                                <p class="text-2xl font-bold text-blue-600 mb-3">@item.Price.ToString("N0") ₽</p>
+                                
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center space-x-3 bg-gray-100 rounded-xl px-4 py-2">
+                                        <button onclick="updateQuantity(@item.ProductId, @item.Quantity - 1)" 
+                                                class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
+                                            <i class="fas fa-minus text-gray-600"></i>
+                                        </button>
+                                        <span class="text-lg font-semibold min-w-8 text-center">@item.Quantity</span>
+                                        <button onclick="updateQuantity(@item.ProductId, @item.Quantity + 1)" 
+                                                class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
+                                            <i class="fas fa-plus text-gray-600"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <span class="text-xl font-bold text-gray-800">
+                                        @item.Total.ToString("N0") ₽
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <button onclick="removeFromCart(@item.ProductId)" 
+                                    class="p-3 text-red-500 hover:bg-red-50 rounded-xl transition-colors duration-200">
+                                <i class="fas fa-trash text-lg"></i>
+                            </button>
+                        </div>
+                    }
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6 h-fit sticky top-6">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">📋 Итоги заказа</h3>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                            <span class="text-gray-600">Товары (@Model.Sum(item => item.Quantity) шт.)</span>
+                            <span class="font-semibold">@Model.Sum(item => item.Total).ToString("N0") ₽</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-3 border-b border-gray-200">
+                            <span class="text-gray-600">Доставка</span>
+                            <span class="font-semibold text-green-600">Бесплатно</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-300">
+                            <span class="text-xl font-bold text-gray-800">Общая сумма</span>
+                            <span class="text-2xl font-bold text-blue-600">@Model.Sum(item => item.Total).ToString("N0") ₽</span>
+                        </div>
+                    </div>
+
+                    <button onclick="checkout()" 
+                            class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold text-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg mb-4">
+                        <i class="fas fa-credit-card mr-2"></i>Оформить заказ
+                    </button>
+
+                    <button onclick="clearCart()" 
+                            class="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-trash-alt mr-2"></i>Очистить корзину
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</section>
